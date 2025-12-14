@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/postgres_kotlin
+    username: postgres
+    password: password1234
+    hikari:
+      maximum-pool-size: 100
+      minimum-idle: 10
