@@ -17,8 +17,8 @@ class WithdrawBookInformationController(
 
     @GetMapping("/withdraw_book")
     fun getWithdrawBook(
-        @RequestParam("id") id: String
-    ): WithdrawBookInformation = withdrawBookService.getWithdrawBookById(id)
+        @RequestParam("isbn_code") isbn: String
+    ): WithdrawBookInformation = withdrawBookService.getWithdrawBookByIsbnCode(isbn)
 
     @PostMapping("/withdraw_book")
     fun postWithdrawBook(
@@ -30,8 +30,4 @@ class WithdrawBookInformationController(
         @RequestBody request: WithdrawBookInformationRequest
     ): WithdrawBookInformationResponse = withdrawBookService.putWithdrawBook(request)
 
-    @DeleteMapping("/withdraw_book")
-    fun deleteWithdrawBook(
-        @RequestParam("id") id: String
-    ): ResponseEntity<*> = withdrawBookService.deleteWithdrawBook(id)
 }

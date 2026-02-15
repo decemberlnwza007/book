@@ -6,7 +6,9 @@ import com.example.library.exception.EntityNotFoundException
 import com.example.library.models.DiscardBookTransactionsRequest
 import com.example.library.models.DiscardBookTransactionsResponse
 import com.example.library.repositories.DiscardBookTransactionsRepository
+import com.example.library.repositories.LibraryBookInformationRepository
 import com.example.library.services.DiscardBookTransactionsService
+import com.example.library.utils.BookStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import java.util.UUID
@@ -14,26 +16,30 @@ import java.util.UUID
 @Service
 class DiscardBookTransactionsServiceImpl(
     private val discardBookRepository: DiscardBookTransactionsRepository,
+    private val libraryBookInformationRepository: LibraryBookInformationRepository
 ) : DiscardBookTransactionsService {
 
     override fun getAllDiscardBooks(): List<DiscardBookTransactions> =
         discardBookRepository.findAll()
 
-    override fun getDiscardBookById(id: UUID): DiscardBookTransactions {
-        return discardBookRepository.findByDiscardBookId(id).orElseThrow {
+    override fun getDiscardBookById(isbn: String): DiscardBookTransactions {
+        return discardBookRepository.findByIsbnCode(isbn).orElseThrow {
             throw EntityNotFoundException("DiscardBook not found.")
         }
     }
 
     override fun postDiscardBook(discardBook: DiscardBookTransactionsRequest): DiscardBookTransactionsResponse {
-        val existingDiscardBook = discardBookRepository.findByDiscardBookId(discardBook.id)
+        val existingDiscardBook = discardBookRepository.findByIsbnCode(discardBook.isbnCode)
         if (existingDiscardBook.isPresent)  throw ConflictException("Already has this id")
+
+        val existingLibraryBook = libraryBookInformationRepository.findByIsbnCode(discardBook.isbnCode).orElseThrow()
 
         val addDiscardBook = DiscardBookTransactions(
             discardBookId = discardBook.id,
             bookId = discardBook.bookId,
             isbnCode = discardBook.isbnCode,
             name = discardBook.name,
+            status = discardBook.status,
             description = discardBook.description,
             userId = discardBook.userId,
             createdBy = discardBook.createdBy,
@@ -41,6 +47,10 @@ class DiscardBookTransactionsServiceImpl(
             updatedBy = discardBook.updatedBy,
             updatedDateTime = discardBook.updatedDateTime
         )
+
+        existingLibraryBook.apply {
+            this.status = BookStatus.DISCARD.name
+        }
 
         discardBookRepository.save(addDiscardBook)
 
@@ -90,13 +100,5 @@ class DiscardBookTransactionsServiceImpl(
                 updatedDateTime = discardBook.updatedDateTime
             )
         }
-    }
-
-    override fun deleteDiscardBook(id: UUID): ResponseEntity<*> {
-        val existingDiscardBook = discardBookRepository.findByDiscardBookId(id).orElseThrow {
-            throw EntityNotFoundException("Entity not found")
-        }
-        discardBookRepository.deleteById(existingDiscardBook.discardBookId)
-        return ResponseEntity.accepted().body("")
     }
 }

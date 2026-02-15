@@ -19,14 +19,14 @@ class RepairBookTransactionsServiceImpl(
     override fun getAllRepairBooks(): List<RepairBookTransactions> =
         repairBookRepository.findAll()
 
-    override fun getRepairBookById(id: UUID): RepairBookTransactions {
-        return repairBookRepository.findById(id).orElseThrow {
+    override fun getRepairBookByIsbnCode(isbn: String): RepairBookTransactions {
+        return repairBookRepository.findByIsbnCode(isbn).orElseThrow {
             EntityNotFoundException("RepairBook not found.")
         }
     }
 
     override fun postRepairBook(repairBook: RepairBookTransactionsRequest): RepairBookTransactionsResponse {
-        val existingRepairBook = repairBookRepository.findByRepairBookId(repairBook.id)
+        val existingRepairBook = repairBookRepository.findByIsbnCode(repairBook.isbnCode)
         if (existingRepairBook.isPresent)  throw ConflictException("Already has this id")
 
         val addRepairBook = RepairBookTransactions(
@@ -92,12 +92,4 @@ class RepairBookTransactionsServiceImpl(
         }
     }
 
-    override fun deleteRepairBook(id: UUID): ResponseEntity<*> {
-        val existingRepairBook = repairBookRepository.findByRepairBookId(id).orElseThrow {
-            throw EntityNotFoundException("Entity not found")
-        }
-
-        repairBookRepository.deleteById(existingRepairBook.repairBookId)
-        return ResponseEntity.accepted().body("")
-    }
 }

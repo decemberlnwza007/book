@@ -10,8 +10,6 @@ import com.example.library.services.UserInformationService
 import com.example.library.utils.GeneratedAlphabetId
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import org.springframework.web.client.HttpClientErrorException
-import kotlin.jvm.Throws
 
 @Service
 class UserInformationServiceImpl (
@@ -26,16 +24,12 @@ class UserInformationServiceImpl (
     }
 
     override fun postUser(user: UserInformationRequest): UserInformationResponse {
-//        val existingUser = userRepository.findByUserId()
-//        if (existingUser.isPresent)  throw ConflictException("Already has this id")
 
         val existingUser = userRepository.findByUsername(user.username)
         if (existingUser.isPresent) throw ConflictException("Already has this username")
 
         val maxId = userRepository.findAllIdDesc()
-        println(maxId)
 
-        println(GeneratedAlphabetId.generateId(maxId))
         val addUser = UserInformation (
             userId = GeneratedAlphabetId.generateId(maxId),
             username = user.username,
@@ -93,9 +87,6 @@ class UserInformationServiceImpl (
                 updatedDateTime = user.updatedDateTime
             )
         }
-
-
-
     }
 
     override fun deleteUser(id: String): ResponseEntity<*> {
@@ -106,8 +97,5 @@ class UserInformationServiceImpl (
         userRepository.deleteById(existingUser.userId)
 
         return ResponseEntity.accepted().body("")
-
-
     }
-
 }

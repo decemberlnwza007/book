@@ -18,13 +18,13 @@ class WithdrawBookInformationServiceImpl(
     override fun getAllWithdrawBooks(): List<WithdrawBookInformation> =
         withdrawBookRepository.findAll()
 
-    override fun getWithdrawBookById(id: String): WithdrawBookInformation =
-        withdrawBookRepository.findById(id).orElseThrow {
+    override fun getWithdrawBookByIsbnCode(isbn: String): WithdrawBookInformation =
+        withdrawBookRepository.findByIsbnCode(isbn).orElseThrow {
             EntityNotFoundException("WithdrawBook not found.")
         }
 
     override fun postWithdrawBook(withdraw: WithdrawBookInformationRequest): WithdrawBookInformationResponse {
-        val existingWithdrawBook = withdrawBookRepository.findByBookId(withdraw.id)
+        val existingWithdrawBook = withdrawBookRepository.findByIsbnCode(withdraw.isbnCode)
         if (existingWithdrawBook.isPresent)  throw ConflictException("Already has this id")
 
         val entity = WithdrawBookInformation(
@@ -63,7 +63,7 @@ class WithdrawBookInformationServiceImpl(
     }
 
     override fun putWithdrawBook(withdraw: WithdrawBookInformationRequest): WithdrawBookInformationResponse {
-        val existingWithdrawBook = withdrawBookRepository.findByBookId(withdraw.id)
+        val existingWithdrawBook = withdrawBookRepository.findByIsbnCode(withdraw.isbnCode)
         if (existingWithdrawBook.isEmpty) throw EntityNotFoundException("Entity not found")
 
         val entity = withdrawBookRepository.findById(withdraw.id).orElseThrow {
@@ -102,14 +102,5 @@ class WithdrawBookInformationServiceImpl(
             updatedBy = withdraw.updatedBy,
             updatedDateTime = withdraw.updatedDateTime
         )
-    }
-
-    override fun deleteWithdrawBook(id: String): ResponseEntity<*> {
-        val existingWithdrawBook = withdrawBookRepository.findByBookId(id).orElseThrow {
-            throw EntityNotFoundException("Entity not found")
-        }
-
-        withdrawBookRepository.deleteById(existingWithdrawBook.withdrawId)
-        return ResponseEntity.accepted().body("")
     }
 }

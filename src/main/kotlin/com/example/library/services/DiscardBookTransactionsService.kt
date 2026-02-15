@@ -10,11 +10,11 @@ interface DiscardBookTransactionsService {
 
     fun getAllDiscardBooks(): List<DiscardBookTransactions>
 
-    fun getDiscardBookById(id: UUID): DiscardBookTransactions
+    fun getDiscardBookById(isbn: String): DiscardBookTransactions
 
     fun postDiscardBook(discardBook: DiscardBookTransactionsRequest): DiscardBookTransactionsResponse
 
     fun putDiscardBook(discardBook: DiscardBookTransactionsRequest): DiscardBookTransactionsResponse
 
-    fun deleteDiscardBook(id: UUID): ResponseEntity<*>
+//    fun deleteDiscardBook(id: UUID): ResponseEntity<*>
 }

@@ -18,6 +18,9 @@ data class DiscardBookTransactionsRequest(
     @JsonProperty("name")
     var name: String,
 
+    @JsonProperty("status")
+    var status: String,
+
     @JsonProperty("description")
     var description: String,
 

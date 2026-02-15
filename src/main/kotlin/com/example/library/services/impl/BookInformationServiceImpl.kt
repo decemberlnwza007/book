@@ -12,14 +12,47 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.server.ServerErrorException
+import java.time.LocalDateTime
+import java.util.UUID
 
 @Service
 class BookInformationServiceImpl(
-    private val bookRepository: BookInformationRepository,
+    private val bookRepository: BookInformationRepository
 ) : BookInformationService {
-    override fun getAllBooks(): List<BookInformation> = bookRepository.findAll()
-    override fun getBookById(id: String): BookInformation {
-        TODO("Not yet implemented")
+    override fun getAllBooks(): List<BookInformationResponse> {
+        val books = bookRepository.findAll()
+
+        val bookResponse = mutableListOf<BookInformationResponse>()
+        books.forEach { book ->
+            val bookInformationResponse = BookInformationResponse(
+                isbnCode = book.isbnCode,
+                writeBy = book.writeBy,
+                name = book.name,
+                publisher = book.publisher,
+                categoryId = book.categoryId,
+                amount = book.amount,
+                price = book.price
+            )
+            bookResponse.add(bookInformationResponse)
+        }
+        LOGGER.info("$bookResponse")
+        return bookResponse
+    }
+
+    override fun getBookByIsbnCode(isbn: String): BookInformationResponse {
+        val book = bookRepository.findByIsbnCode(isbn).orElseThrow {
+            throw EntityNotFoundException("Book not found.")
+        }
+        return BookInformationResponse (
+            isbnCode = book.isbnCode,
+            writeBy = book.writeBy,
+            name = book.name,
+            publisher = book.publisher,
+            categoryId = book.categoryId,
+            amount = book.amount,
+            price = book.price
+        )
+
     }
 
     companion object {
@@ -29,12 +62,12 @@ class BookInformationServiceImpl(
     }
 
     override fun postBook(book: BookInformationRequest): BookInformationResponse {
-        val existingBook = bookRepository.findByBookId(book.id)
-        if (existingBook.isPresent)  throw ConflictException("Already has this id")
+        val existingBook = bookRepository.findByIsbnCode(book.isbnCode)
+        if (existingBook.isPresent)  throw ConflictException("Already has this isbn code")
 
         val addBook = try {
             BookInformation(
-                bookId = book.id,
+                bookId = UUID.randomUUID(),
                 isbnCode = book.isbnCode,
                 writeBy = book.writeBy,
                 name = book.name,
@@ -43,9 +76,9 @@ class BookInformationServiceImpl(
                 amount = book.amount,
                 price = book.price,
                 createdBy = book.createdBy,
-                createdDateTime = book.createdDateTime,
+                createdDateTime = LocalDateTime.now(),
                 updatedBy = book.updatedBy,
-                updatedDateTime = book.updatedDateTime
+                updatedDateTime = LocalDateTime.now()
             )
         } catch (e: Exception) {
             LOGGER.error("Exception", e)
@@ -67,16 +100,12 @@ class BookInformationServiceImpl(
             publisher = book.publisher,
             categoryId = book.categoryId,
             amount = book.amount,
-            price = book.price,
-            createdBy = book.createdBy,
-            createdDateTime = book.createdDateTime,
-            updatedBy = book.updatedBy,
-            updatedDateTime = book.updatedDateTime
+            price = book.price
         )
     }
 
     override fun putBook(book: BookInformationRequest): BookInformationResponse {
-        val existingBook = bookRepository.findByBookId(book.id)
+        val existingBook = bookRepository.findByIsbnCode(book.isbnCode)
         if (existingBook.isEmpty) throw EntityNotFoundException("Entity not found")
 
         existingBook.get().apply {
@@ -88,9 +117,9 @@ class BookInformationServiceImpl(
             amount = book.amount
             price = book.price
             createdBy = book.createdBy
-            createdDateTime = book.createdDateTime
+            createdDateTime = LocalDateTime.now()
             updatedBy = book.updatedBy
-            updatedDateTime = book.updatedDateTime
+            updatedDateTime = LocalDateTime.now()
 
             bookRepository.saveAndFlush(existingBook.get())
 
@@ -101,19 +130,15 @@ class BookInformationServiceImpl(
                 publisher = book.publisher,
                 categoryId = book.categoryId,
                 amount = book.amount,
-                price = book.price,
-                createdBy = book.createdBy,
-                createdDateTime = book.createdDateTime,
-                updatedBy = book.updatedBy,
-                updatedDateTime = book.updatedDateTime
+                price = book.price
             )
         }
     }
 
-    override fun deleteBook(id: String): ResponseEntity<*> {
-        val existingBook = bookRepository.findByBookId(id)
+    override fun deleteBook(isbn: String): ResponseEntity<*> {
+        val existingBook = bookRepository.findByIsbnCode(isbn).get()
 
-        bookRepository.deleteById(id)
+        bookRepository.deleteById(existingBook.bookId)
         return ResponseEntity.accepted().body("")
     }
 

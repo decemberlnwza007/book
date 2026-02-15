@@ -9,7 +9,7 @@ interface ReturnBookInformationService {
 
     fun getAllReturnBooks(): List<ReturnBookInformation>
 
-    fun getReturnBookById(id: String): ReturnBookInformation
+    fun getReturnBookByIsbnCode(isbn: String): ReturnBookInformation
 
     fun postReturnBook(returnBook: ReturnBookInformationRequest): ReturnBookInformationResponse
 

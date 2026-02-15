@@ -17,8 +17,8 @@ class ReturnBookInformationController(
 
     @GetMapping("/return_book")
     fun getReturnBook(
-        @RequestParam("id") id: String
-    ): ReturnBookInformation = returnBookService.getReturnBookById(id)
+        @RequestParam("isbn_code") isbn: String
+    ): ReturnBookInformation = returnBookService.getReturnBookByIsbnCode(isbn)
 
     @PostMapping("/return_book")
     fun postReturnBook(

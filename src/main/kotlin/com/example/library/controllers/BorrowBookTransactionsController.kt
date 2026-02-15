@@ -7,6 +7,7 @@ import com.example.library.services.BorrowBookTransactionsService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -24,8 +25,8 @@ class BorrowBookTransactionsController (
 
     @GetMapping("/borrow_book")
     fun getBorrowBook(
-        @RequestParam("id") id: UUID
-    ) : BorrowBookTransactions = borrowBookService.getBorrowBook(id)
+        @RequestParam("isbn_code") isbn: String
+    ) : BorrowBookTransactionsResponse = borrowBookService.getBorrowBook(isbn)
 
     @PostMapping("/borrow_book")
     fun postBorrowBook (
@@ -36,9 +37,4 @@ class BorrowBookTransactionsController (
     fun putBorrowBook (
         @RequestBody borrowBookRequest: BorrowBookTransactionsRequest
     ): BorrowBookTransactionsResponse = borrowBookService.putBorrowBook(borrowBookRequest)
-
-    @DeleteMapping("/borrow_book")
-    fun deleteBorrowBook(
-        @RequestParam id: UUID
-    ): ResponseEntity<*> = borrowBookService.deleteBorrowBook(id)
 }

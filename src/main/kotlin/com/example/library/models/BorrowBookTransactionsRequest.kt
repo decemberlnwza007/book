@@ -7,44 +7,44 @@ import java.util.UUID
 
 data class BorrowBookTransactionsRequest (
     @JsonProperty("id")
-    val id: UUID,
+    val id: UUID? = null,
 
     @JsonProperty("isbn_code")
-    val isbnCode: String,
+    val isbnCode: String? = null,
 
     @JsonProperty("student_id")
-    val studentId: String,
+    val studentId: String? = null,
 
     @JsonProperty("book_id")
-    val bookId: String,
+    val bookId: String? = null,
 
     @JsonProperty("name")
-    val name: String,
+    val name: String? = null,
 
     @JsonProperty("status")
-    val status: String,
+    val status: String? = null,
 
     @JsonProperty("price")
-    val price: String,
+    val price: Int? = null,
 
     @JsonProperty("borrow_date")
-    val borrowDate: String,
+    val borrowDate: String? = null,
 
     @JsonProperty("return_date")
-    val returnDate: String,
+    val returnDate: String? = null,
 
     @JsonProperty("user_id")
-    val userId: String,
+    val userId: String? = null,
 
     @JsonProperty("created_by")
-    var createdBy: String,
+    var createdBy: String? = null,
 
     @JsonProperty("created_datetime")
-    var createdDateTime: LocalDateTime,
+    var createdDateTime: LocalDateTime? = null,
 
     @JsonProperty("updated_by")
-    var updatedBy: String,
+    var updatedBy: String? = null,
 
     @JsonProperty("updated_datetime")
-    var updatedDateTime: LocalDateTime
+    var updatedDateTime: LocalDateTime? = null
 )

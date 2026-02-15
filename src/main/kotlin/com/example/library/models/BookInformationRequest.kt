@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.LocalDateTime
 
 data class BookInformationRequest (
-    @JsonProperty("id")
-    var id: String,
 
     @JsonProperty("isbn_code")
     var isbnCode: String,
@@ -31,12 +29,6 @@ data class BookInformationRequest (
     @JsonProperty("created_by")
     var createdBy: String,
 
-    @JsonProperty("created_datetime")
-    var createdDateTime: LocalDateTime,
-
     @JsonProperty("updated_by")
-    var updatedBy: String,
-
-    @JsonProperty("updated_datetime")
-    var updatedDateTime: LocalDateTime
+    var updatedBy: String
 )

@@ -10,11 +10,11 @@ interface RepairBookTransactionsService {
 
     fun getAllRepairBooks(): List<RepairBookTransactions>
 
-    fun getRepairBookById(id: UUID): RepairBookTransactions
+    fun getRepairBookByIsbnCode(isbn: String): RepairBookTransactions
 
     fun postRepairBook(repairBook: RepairBookTransactionsRequest): RepairBookTransactionsResponse
 
     fun putRepairBook(repairBook: RepairBookTransactionsRequest): RepairBookTransactionsResponse
 
-    fun deleteRepairBook(id: UUID): ResponseEntity<*>
+//    fun deleteRepairBook(id: UUID): ResponseEntity<*>
 }

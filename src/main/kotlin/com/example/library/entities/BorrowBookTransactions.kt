@@ -4,7 +4,6 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.Table
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -17,42 +16,42 @@ data class BorrowBookTransactions (
     var borrowBookId: UUID,
 
     @Column(name = "isbn_code")
-    var isbnCode: String,
+    var isbnCode: String? = "",
 
     @Column(name = "student_id")
-    var studentId: String,
+    var studentId: String? = "",
 
     @Column(name = "book_id")
-    var bookId: String,
+    var bookId: String? = "",
 
     @Column(name = "name")
-    var name: String,
+    var name: String?= "",
 
     @Column(name = "status")
-    var status: String,
+    var status: String? = "",
 
     @Column(name = "price")
-    var price: String,
+    var price: Int? = 0,
 
     @Column(name = "borrow_date")
-    var borrowDate: String,
+    var borrowDate: String? = "",
 
     @Column(name = "return_date")
-    var returnDate: String,
+    var returnDate: String? = "",
 
     @Column(name = "created_by")
-    var createdBy: String,
+    var createdBy: String? = "",
 
     @Column(name = "created_datetime")
-    var createdDateTime: LocalDateTime,
+    var createdDateTime: LocalDateTime? = null,
 
     @Column(name = "updated_by")
-    var updatedBy: String,
+    var updatedBy: String? = "",
 
     @Column(name = "updated_datetime")
-    var updatedDateTime: LocalDateTime,
+    var updatedDateTime: LocalDateTime? = null,
 
     @Column(name = "user_id")
-    var userId: String
+    var userId: String? = ""
 
     )

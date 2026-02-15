@@ -21,10 +21,12 @@ class BookInformationController (
 ) {
 
     @GetMapping("/books")
-    fun getBooks() : List<BookInformation> = bookInformationService.getAllBooks()
+    fun getBooks() : List<BookInformationResponse> {
+        return bookInformationService.getAllBooks()
+    }
 
-    @GetMapping("/book/{id}")
-    fun getBook(@PathVariable("id") id : String) : BookInformation = bookInformationService.getBookById(id)
+    @GetMapping("/book/{isbn_code}")
+    fun getBook(@PathVariable("isbn_code") isbn : String) : BookInformationResponse = bookInformationService.getBookByIsbnCode(isbn)
 
     @PostMapping("/book")
     fun postBook(

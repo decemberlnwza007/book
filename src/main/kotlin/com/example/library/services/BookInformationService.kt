@@ -7,13 +7,13 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
 interface BookInformationService {
-    fun getAllBooks() : List<BookInformation>
+    fun getAllBooks() : List<BookInformationResponse>
 
-    fun getBookById(id: String) : BookInformation
+    fun getBookByIsbnCode(isbn: String) : BookInformationResponse
 
     fun postBook(book: BookInformationRequest) : BookInformationResponse
 
     fun putBook(book: BookInformationRequest): BookInformationResponse
 
-    fun deleteBook(id: String) : ResponseEntity<*>
+    fun deleteBook(isbn: String) : ResponseEntity<*>
 }

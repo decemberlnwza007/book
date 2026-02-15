@@ -8,5 +8,5 @@ import java.util.UUID
 
 @Repository
 interface RepairBookTransactionsRepository : JpaRepository<RepairBookTransactions, UUID> {
-    fun findByRepairBookId(id: UUID): Optional<RepairBookTransactions>
+    fun findByIsbnCode(isbn: String): Optional<RepairBookTransactions>
 }

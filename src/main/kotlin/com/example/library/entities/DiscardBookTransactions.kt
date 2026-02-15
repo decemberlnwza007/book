@@ -24,6 +24,9 @@ data class DiscardBookTransactions (
     @Column(name = "name")
     var name: String,
 
+    @Column(name = "status")
+    var status: String,
+
     @Column(name = "description")
     var description: String,
 

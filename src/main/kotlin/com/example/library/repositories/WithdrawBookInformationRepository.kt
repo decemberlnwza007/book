@@ -7,5 +7,5 @@ import java.util.Optional
 
 @Repository
 interface WithdrawBookInformationRepository : JpaRepository<WithdrawBookInformation, String> {
-    fun findByBookId(id: String): Optional<WithdrawBookInformation>
+    fun findByIsbnCode(isbn: String): Optional<WithdrawBookInformation>
 }

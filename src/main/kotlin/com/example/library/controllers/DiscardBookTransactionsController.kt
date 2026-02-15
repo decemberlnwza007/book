@@ -24,8 +24,8 @@ class DiscardBookTransactionsController(
 
     @GetMapping("/discard_book")
     fun getDiscardBook(
-        @RequestParam("id") id: UUID
-    ): DiscardBookTransactions = discardBookService.getDiscardBookById(id)
+        @RequestParam("isbn_code") isbn: String
+    ): DiscardBookTransactions = discardBookService.getDiscardBookById(isbn)
 
     @PostMapping("/discard_book")
     fun postDiscardBook(
@@ -36,9 +36,4 @@ class DiscardBookTransactionsController(
     fun putDiscardBook(
         @RequestBody discardBookRequest: DiscardBookTransactionsRequest
     ): DiscardBookTransactionsResponse = discardBookService.putDiscardBook(discardBookRequest)
-
-    @DeleteMapping("/discard_book")
-    fun deleteDiscardBook(
-        @RequestParam("id") id: UUID
-    ): ResponseEntity<*> = discardBookService.deleteDiscardBook(id)
 }

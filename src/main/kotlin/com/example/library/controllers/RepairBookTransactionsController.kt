@@ -25,8 +25,8 @@ class RepairBookTransactionsController(
 
     @GetMapping("/repair_book")
     fun getRepairBook(
-        @RequestParam("id") id: UUID
-    ): RepairBookTransactions = repairBookService.getRepairBookById(id)
+        @RequestParam("isbn_code") isbn: String
+    ): RepairBookTransactions = repairBookService.getRepairBookByIsbnCode(isbn)
 
     @PostMapping("/repair_book")
     fun postRepairBook(
@@ -38,8 +38,7 @@ class RepairBookTransactionsController(
         @RequestBody repairBookRequest: RepairBookTransactionsRequest
     ): RepairBookTransactionsResponse = repairBookService.putRepairBook(repairBookRequest)
 
-    @DeleteMapping("/repair_book")
-    fun deleteRepairBook(
-        @RequestParam("id") id: UUID
-    ): ResponseEntity<*> = repairBookService.deleteRepairBook(id)
+
+
+
 }

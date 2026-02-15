@@ -9,11 +9,9 @@ import java.util.UUID
 interface BorrowBookTransactionsService {
     fun getAllBorrowBooks(): List<BorrowBookTransactions>
 
-    fun getBorrowBook(id: UUID) : BorrowBookTransactions
+    fun getBorrowBook(isbn: String) : BorrowBookTransactionsResponse
 
     fun postBorrowBook(borrow: BorrowBookTransactionsRequest): BorrowBookTransactionsResponse
 
     fun putBorrowBook(borrow: BorrowBookTransactionsRequest): BorrowBookTransactionsResponse
-
-    fun deleteBorrowBook(id: UUID): ResponseEntity<*>
 }

@@ -9,11 +9,10 @@ interface WithdrawBookInformationService {
 
     fun getAllWithdrawBooks(): List<WithdrawBookInformation>
 
-    fun getWithdrawBookById(id: String): WithdrawBookInformation
+    fun getWithdrawBookByIsbnCode(isbn: String): WithdrawBookInformation
 
     fun postWithdrawBook(withdraw: WithdrawBookInformationRequest): WithdrawBookInformationResponse
 
     fun putWithdrawBook(withdraw: WithdrawBookInformationRequest): WithdrawBookInformationResponse
 
-    fun deleteWithdrawBook(id: String): ResponseEntity<*>
 }

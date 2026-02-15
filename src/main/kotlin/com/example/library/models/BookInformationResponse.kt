@@ -8,35 +8,23 @@ data class BookInformationResponse (
 //    var bookId: String,
 
     @JsonProperty("isbn_code")
-    var isbnCode: String,
+    var isbnCode: String? = null,
 
     @JsonProperty("write_by")
-    var writeBy: String,
+    var writeBy: String? = null,
 
     @JsonProperty("name")
-    var name: String,
+    var name: String? = null,
 
     @JsonProperty("publisher")
-    var publisher: String,
+    var publisher: String? = null,
 
     @JsonProperty("category_id")
-    var categoryId: String,
+    var categoryId: String? = null,
 
     @JsonProperty("amount")
-    var amount: Int,
+    var amount: Int? = null,
 
     @JsonProperty("price")
-    var price: Int,
-
-    @JsonProperty("created_by")
-    var createdBy: String,
-
-    @JsonProperty("created_datetime")
-    var createdDateTime: LocalDateTime,
-
-    @JsonProperty("updated_by")
-    var updatedBy: String,
-
-    @JsonProperty("updated_datetime")
-    var updatedDateTime: LocalDateTime
+    var price: Int? = null
 )

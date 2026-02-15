@@ -18,10 +18,11 @@ class ReturnBookInformationServiceImpl(
     override fun getAllReturnBooks(): List<ReturnBookInformation> =
         returnBookRepository.findAll()
 
-    override fun getReturnBookById(id: String): ReturnBookInformation =
-        returnBookRepository.findById(id).orElseThrow {
+    override fun getReturnBookByIsbnCode(isbn: String): ReturnBookInformation {
+        return returnBookRepository.findById(isbn).orElseThrow {
             EntityNotFoundException("ReturnBook not found.")
         }
+    }
 
     override fun postReturnBook(returnBook: ReturnBookInformationRequest): ReturnBookInformationResponse {
         val existingBook = returnBookRepository.findByReturnBookId(returnBook.id)
