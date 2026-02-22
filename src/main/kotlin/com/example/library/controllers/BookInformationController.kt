@@ -25,8 +25,8 @@ class BookInformationController (
         return bookInformationService.getAllBooks()
     }
 
-    @GetMapping("/book/{isbn_code}")
-    fun getBook(@PathVariable("isbn_code") isbn : String) : BookInformationResponse = bookInformationService.getBookByIsbnCode(isbn)
+    @GetMapping("/book")
+    fun getBook(@RequestParam("isbn_code") isbn: String) : BookInformationResponse = bookInformationService.getBookByIsbnCode(isbn)
 
     @PostMapping("/book")
     fun postBook(
@@ -38,6 +38,6 @@ class BookInformationController (
         @RequestBody bookInformationRequest: BookInformationRequest
     ) : BookInformationResponse = bookInformationService.putBook(bookInformationRequest)
 
-    @DeleteMapping("/book/{id}")
-    fun deleteBook(@PathVariable("id") id : String) : ResponseEntity<*> = bookInformationService.deleteBook(id)
+    @DeleteMapping("/book")
+    fun deleteBook(@RequestParam("id") id: String) : ResponseEntity<*> = bookInformationService.deleteBook(id)
 }

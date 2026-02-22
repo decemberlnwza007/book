@@ -1,9 +1,38 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/postgres_kotlin
+    url: jdbc:postgresql://localhost:5432/library_db
     username: postgres
     password: password1234
     hikari:
       maximum-pool-size: 100
       minimum-idle: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql: true
+        default_schema: book
+
+server:
+  ports: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name:my-spring-app}
+  prometheus:
+    metrics:
+      export:
+        enabled: true

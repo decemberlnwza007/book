@@ -40,11 +40,11 @@ data class BookInformation (
     var createdBy: String,
 
     @Column(name = "created_datetime")
-    var createdDateTime: LocalDateTime,
+    var createdDateTime: LocalDateTime?,
 
     @Column(name = "updated_by")
     var updatedBy: String,
 
     @Column(name = "updated_datetime")
-    var updatedDateTime: LocalDateTime
+    var updatedDateTime: LocalDateTime?
 )

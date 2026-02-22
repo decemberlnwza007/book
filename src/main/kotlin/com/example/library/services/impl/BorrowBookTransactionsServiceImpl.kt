@@ -5,7 +5,6 @@ import com.example.library.exception.EntityNotFoundException
 import com.example.library.models.BorrowBookTransactionsRequest
 import com.example.library.models.BorrowBookTransactionsResponse
 import com.example.library.repositories.BorrowBookTransactionsRepository
-import com.example.library.repositories.CategoryMasterRepository
 import com.example.library.repositories.LibraryBookInformationRepository
 import com.example.library.services.BorrowBookTransactionsService
 import com.example.library.utils.BookStatus
@@ -16,9 +15,7 @@ import org.springframework.web.server.ServerErrorException
 import java.lang.Exception
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.Optional
 import java.util.UUID
-import kotlin.jvm.Throws
 
 @Service
 class BorrowBookTransactionsServiceImpl(

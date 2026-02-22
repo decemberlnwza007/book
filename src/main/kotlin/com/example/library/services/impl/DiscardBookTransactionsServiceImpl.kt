@@ -9,9 +9,7 @@ import com.example.library.repositories.DiscardBookTransactionsRepository
 import com.example.library.repositories.LibraryBookInformationRepository
 import com.example.library.services.DiscardBookTransactionsService
 import com.example.library.utils.BookStatus
-import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
-import java.util.UUID
 
 @Service
 class DiscardBookTransactionsServiceImpl(
